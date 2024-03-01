@@ -2,6 +2,11 @@ name: on-pull-request-module-settings
 
 on:
   pull_request:
+    paths-ignore:
+      - 'docker/**'
+      - '.gitignore'
+      - '**.md'
+      - 'renovate.json'
 
 jobs:
   setup:
