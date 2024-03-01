@@ -1,0 +1,9 @@
+services:
+  restaurant_db:
+    extends:
+      file: ./postgres/postgres.yml
+      service: restaurant_db
+  restaurant_db_migration:
+    extends:
+      file: ./postgres/postgres.yml
+      service: restaurant_db_migration
