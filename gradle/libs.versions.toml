@@ -43,7 +43,7 @@ logback-access = { module = "ch.qos.logback:logback-access" }
 #########################################
 # I/O library
 #########################################
-open-csv = { module = "com.opencsv:opencsv", version = { strictly = "5.8" } }
+open-csv = { module = "com.opencsv:opencsv", version = { strictly = "5.9" } }
 
 #########################################
 # unit test library
