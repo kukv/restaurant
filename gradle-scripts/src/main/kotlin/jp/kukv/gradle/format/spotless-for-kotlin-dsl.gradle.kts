@@ -9,6 +9,12 @@ repositories {
 }
 
 spotless {
+    kotlin {
+        target("gradle-scripts/**/*.kt")
+        targetExclude("gradle-scripts/build/**/*.kt")
+
+        ktlint()
+    }
     kotlinGradle {
         target("*.gradle.kts", "**/*.gradle.kts")
         targetExclude("**/build/**/*.kts")
