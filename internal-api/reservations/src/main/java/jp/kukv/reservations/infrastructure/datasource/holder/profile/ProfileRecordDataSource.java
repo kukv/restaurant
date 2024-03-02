@@ -3,7 +3,7 @@ package jp.kukv.reservations.infrastructure.datasource.holder.profile;
 import jp.kukv.reservations.application.service.holder.profile.ProfileRecordRepository;
 import jp.kukv.reservations.domain.model.holder.profile.Profile;
 import jp.kukv.reservations.domain.model.reservation.ReservationId;
-import jp.kukv.reservations.infrastructure.datasource.reservation.course.CreatedTime;
+import jp.kukv.reservations.infrastructure.datasource.CreatedTime;
 import org.springframework.stereotype.Repository;
 
 @Repository

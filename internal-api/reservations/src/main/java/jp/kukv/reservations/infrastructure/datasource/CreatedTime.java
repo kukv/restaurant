@@ -1,4 +1,4 @@
-package jp.kukv.reservations.infrastructure.datasource.reservation.course;
+package jp.kukv.reservations.infrastructure.datasource;
 
 import java.time.LocalDateTime;
 
