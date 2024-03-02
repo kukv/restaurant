@@ -8,7 +8,6 @@ java = "21"
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
 spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
-spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
 
 spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
 spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
@@ -47,8 +46,7 @@ archunit-junit5 = { module = "com.tngtech.archunit:archunit-junit5", version = {
 spring-boot-starter-api = [
     "spring-boot-starter-web",
     "spring-boot-starter-validation",
-    "spring-boot-starter-actuator",
-    "spring-boot-docker-compose"
+    "spring-boot-starter-actuator"
 ]
 
 spring-boot-starter-mybatis = [
