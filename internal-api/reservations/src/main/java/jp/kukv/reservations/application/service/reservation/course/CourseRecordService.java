@@ -4,7 +4,7 @@ import jp.kukv.reservations.domain.model.reservation.ReservationId;
 import jp.kukv.reservations.domain.model.reservation.course.Course;
 import org.springframework.stereotype.Service;
 
-/** コースサービス */
+/** 予約コースサービス */
 @Service
 public class CourseRecordService {
 

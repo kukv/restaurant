@@ -7,6 +7,7 @@ import jp.kukv.reservations.application.service.reservation.course.CourseRecordS
 import jp.kukv.reservations.domain.model.holder.Holder;
 import jp.kukv.reservations.domain.model.reservation.Reservation;
 import jp.kukv.reservations.domain.model.reservation.ReservationId;
+import jp.kukv.reservations.domain.model.reservation.ReservationRule;
 import org.springframework.stereotype.Service;
 
 /** 予約受付 */
@@ -20,6 +21,9 @@ public class ReservationCoordinator {
 
   /** 予約する */
   public ReservationId reserve(Reservation reservation, Holder holder) {
+    ReservationRule rule = new ReservationRule(reservation);
+    rule.check();
+
     ReservationId reservationId = reservationRecordService.reserve(reservation);
 
     courseRecordService.specify(reservationId, reservation.course());

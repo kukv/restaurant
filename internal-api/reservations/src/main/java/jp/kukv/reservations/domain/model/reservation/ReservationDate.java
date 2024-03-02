@@ -19,8 +19,12 @@ class ReservationDate {
     this.value = value;
   }
 
-  boolean is当日() {
-    return value.isEqual(LocalDate.now());
+  boolean is未来日付() {
+    return value.isAfter(LocalDate.now());
+  }
+
+  boolean is過去日付() {
+    return value.isBefore(LocalDate.now());
   }
 
   @Override

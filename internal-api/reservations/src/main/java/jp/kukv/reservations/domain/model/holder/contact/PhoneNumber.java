@@ -10,7 +10,7 @@ class PhoneNumber {
 
   @NotEmpty(message = "予約者電話番号は必須")
   @Length(min = 11, max = 11, message = "予約者電話番号は11桁のみ")
-  @Pattern(regexp = "^0[7-9]0\\d.+", message = "予約者電話番号は数値のみ")
+  @Pattern(regexp = "^\\d+", message = "予約者電話番号は数値のみ")
   @JsonValue
   String value;
 

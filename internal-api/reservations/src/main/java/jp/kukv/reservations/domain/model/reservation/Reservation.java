@@ -2,10 +2,7 @@ package jp.kukv.reservations.domain.model.reservation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
-import java.time.Duration;
-import java.time.LocalTime;
 import jp.kukv.reservations.domain.model.reservation.course.Course;
 
 /** 予約 */
@@ -37,15 +34,10 @@ public class Reservation {
     this.course = course;
   }
 
-  @AssertTrue(message = "予約日時は当日の30分以上前であること")
-  private boolean isReservationDateTimeValidate() {
-    if (!date.is当日()) return true;
-
-    LocalTime now = LocalTime.now();
-    Duration duration = Duration.between(now, time.value);
-
-    long diff = duration.toMinutes();
-    return 30 < diff;
+  boolean is当日30分以上前の予約() {
+    if (date.is未来日付()) return true;
+    if (date.is過去日付()) return false;
+    return time.is予約時刻が30分以上前();
   }
 
   public Course course() {
