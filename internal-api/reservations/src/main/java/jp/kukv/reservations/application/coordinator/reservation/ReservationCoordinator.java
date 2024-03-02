@@ -22,7 +22,7 @@ public class ReservationCoordinator {
   public ReservationId reserve(Reservation reservation, Holder holder) {
     ReservationId reservationId = reservationRecordService.reserve(reservation);
 
-    courseRecordService.specify(reservation.course());
+    courseRecordService.specify(reservationId, reservation.course());
 
     profileRecordService.record(holder.profile());
     contactRecordService.record(holder.contact());
