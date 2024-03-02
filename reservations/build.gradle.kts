@@ -10,3 +10,7 @@ plugins {
 
     id("jp.kukv.gradle.dependency.ben-manes-versions")
 }
+
+dependencies {
+    implementation(libs.bundles.spring.boot.starter.mybatis)
+}

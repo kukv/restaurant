@@ -12,7 +12,6 @@ plugins {
 
 dependencies {
     implementation(libs.bundle("spring-boot-starter-api"))
-    implementation(libs.bundle("spring-boot-starter-mybatis"))
     implementation(libs.bundle("spring-boot-starter-logging"))
 
     developmentOnly(libs.library("spring-boot-devtools"))
