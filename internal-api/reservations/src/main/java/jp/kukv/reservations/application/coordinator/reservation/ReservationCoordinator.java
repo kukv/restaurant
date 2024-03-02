@@ -24,7 +24,7 @@ public class ReservationCoordinator {
 
     courseRecordService.specify(reservationId, reservation.course());
 
-    profileRecordService.record(holder.profile());
+    profileRecordService.record(reservationId, holder.profile());
     contactRecordService.record(holder.contact());
 
     return reservationId;
