@@ -57,8 +57,7 @@ create table reservations.reservation_holder_profile(
     birth_date      date                        not null,
     created_at      timestamp without time zone not null default current_timestamp,
 
-    foreign key (reservation_id) references reservations.reservation (id),
-    constraint country_reservation_holder_profile_reservation_id_unique unique (reservation_id)
+    foreign key (reservation_id) references reservations.reservation (id)
 );
 comment on table  reservations.reservation_holder_profile                  is '予約者プロフィール';
 comment on column reservations.reservation_holder_profile.id               is '予約者プロフィールID';
@@ -73,8 +72,7 @@ create table reservations.reservation_holder_contact(
     phone_number    varchar(13)                 not null,
     created_at      timestamp without time zone not null default current_timestamp,
 
-    foreign key (reservation_id) references reservations.reservation (id),
-    constraint country_reservation_holder_contact_reservation_id_unique unique (reservation_id)
+    foreign key (reservation_id) references reservations.reservation (id)
 );
 comment on table  reservations.reservation_holder_contact                  is '予約者連絡先';
 comment on column reservations.reservation_holder_contact.id               is '予約者連絡先ID';
