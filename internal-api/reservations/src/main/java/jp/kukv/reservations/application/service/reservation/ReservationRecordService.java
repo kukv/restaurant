@@ -8,8 +8,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReservationRecordService {
 
+  ReservationRecordRepository reservationRecordRepository;
+
   /** 予約する */
   public ReservationId reserve(Reservation reservation) {
-    return ReservationId.create();
+    return reservationRecordRepository.reserve(reservation);
+  }
+
+  ReservationRecordService(ReservationRecordRepository reservationRecordRepository) {
+    this.reservationRecordRepository = reservationRecordRepository;
   }
 }
