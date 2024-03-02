@@ -6,5 +6,6 @@ pluginManagement {
 }
 
 includeBuild("gradle-scripts")
+includeBuild("reservations")
 
 rootProject.name = "restaurant"
