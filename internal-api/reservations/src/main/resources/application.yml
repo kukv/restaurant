@@ -38,7 +38,7 @@ server:
 
 mybatis:
   mapper-locations: classpath*:/jp/kukv/reservations/infrastructure/datasource/**/*.xml
-  type-handlers-package: jp.kukv.reservations.infrastructure.configuration.mybatis.typehandler
+  type-handlers-package: jp.kukv.reservations.configuration.mybatis.typehandler
   configuration:
     map-underscore-to-camel-case: true
 
@@ -56,5 +56,5 @@ springdoc:
     enabled: false
   swagger-ui:
     enabled: false
-  packages-to-scan: jp.kukv.reservations.presentation
+  packages-to-scan: jp.kukv.reservations.presentation.api
   paths-to-match: /v1/**
