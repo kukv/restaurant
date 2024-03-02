@@ -1,14 +1,9 @@
-name: on-pull-request-module-settings
+name: on-pull-request-internal-api-reservations
 
 on:
   pull_request:
     paths:
-      - 'gradle/**'
-      - 'gradle-scripts/**'
-      - 'build.gradle.kts'
-      - 'gradlew'
-      - 'gradlew.bat'
-      - 'settings.gradle.kts'
+      - 'internal-api/reservations/**'
 
 jobs:
   setup:
@@ -53,4 +48,4 @@ jobs:
         run: chmod +x gradlew
 
       - name: Check with Gradle
-        run: ./gradlew check
+        run: ./gradlew :reservations:check
