@@ -1,4 +1,4 @@
-package jp.kukv._extensions
+package jp.kukv.extensions
 
 import org.gradle.api.provider.Property
 

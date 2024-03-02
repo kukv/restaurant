@@ -1,8 +1,8 @@
 package jp.kukv.gradle.frameworks
 
-import jp.kukv._extensions.bundle
-import jp.kukv._extensions.library
-import jp.kukv._extensions.libs
+import jp.kukv.extensions.bundle
+import jp.kukv.extensions.library
+import jp.kukv.extensions.libs
 
 plugins {
     id("jp.kukv.gradle.lang.java")
