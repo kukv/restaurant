@@ -1,8 +1,10 @@
+[versions]
+java = "21"
+
 [libraries]
 #########################################
 # spring boot
 #########################################
-spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
 spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
@@ -20,14 +22,8 @@ mybatis-spring-boot-starter = { module = "org.mybatis.spring.boot:mybatis-spring
 postgresql-jdbc = { module = "org.postgresql:postgresql" }
 
 #########################################
-# AWS
-#########################################
-spring-cloud-aws-starter-s3 = { module = "io.awspring.cloud:spring-cloud-aws-starter-s3", version = { strictly = "3.1.0" } }
-
-#########################################
 # validation library
 #########################################
-yavi = { module = "am.ik.yavi:yavi", version = { strictly = "0.13.1" } }
 commons-validator = { module = "commons-validator:commons-validator", version = { strictly = "1.8.0" } }
 
 #########################################
@@ -41,15 +37,8 @@ springdoc-openapi-starter-webmvc-ui = { module = "org.springdoc:springdoc-openap
 logback-access = { module = "ch.qos.logback:logback-access" }
 
 #########################################
-# I/O library
-#########################################
-open-csv = { module = "com.opencsv:opencsv", version = { strictly = "5.9" } }
-
-#########################################
 # unit test library
 #########################################
-junit5-bom = { module = "org.junit:junit-bom", version = { strictly = "5.10.2" } }
-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
 karate-junit5 = { module = "com.intuit.karate:karate-junit5", version = { strictly = "1.4.1" } }
 cucumber-reporting = { module = "net.masterthought:cucumber-reporting", version = { strictly = "5.7.8" } }
 archunit-junit5 = { module = "com.tngtech.archunit:archunit-junit5", version = { strictly = "1.2.1" } }
@@ -59,7 +48,6 @@ spring-boot-starter-api = [
     "spring-boot-starter-web",
     "spring-boot-starter-validation",
     "spring-boot-starter-actuator",
-    "springdoc-openapi-starter-webmvc-ui",
     "spring-boot-docker-compose"
 ]
 
