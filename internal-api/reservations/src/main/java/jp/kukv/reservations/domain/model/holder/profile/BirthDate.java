@@ -1,19 +1,19 @@
-package jp.kukv.reservations.domain.model.reservation;
+package jp.kukv.reservations.domain.model.holder.profile;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.validation.constraints.NotNull;
-import java.time.LocalTime;
+import java.time.LocalDate;
 
-/** 予約時刻 */
-class ReservationTime {
+/** 予約者生年月日 */
+class BirthDate {
 
-  @NotNull(message = "予約時刻は必須")
+  @NotNull(message = "予約者生年月日は必須")
   @JsonValue
-  LocalTime value;
+  LocalDate value;
 
   @JsonCreator
-  ReservationTime(LocalTime value) {
+  BirthDate(LocalDate value) {
     this.value = value;
   }
 
@@ -22,5 +22,5 @@ class ReservationTime {
     return value.toString();
   }
 
-  ReservationTime() {}
+  BirthDate() {}
 }

@@ -13,4 +13,10 @@ class DinerId {
   public String toString() {
     return String.valueOf(value);
   }
+
+  private DinerId() {}
+
+  public static DinerId empty() {
+    return new DinerId();
+  }
 }

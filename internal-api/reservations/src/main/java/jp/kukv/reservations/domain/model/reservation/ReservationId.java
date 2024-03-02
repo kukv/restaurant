@@ -1,11 +1,12 @@
 package jp.kukv.reservations.domain.model.reservation;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.UUID;
 
 /** 予約ID */
-class ReservationId {
+public class ReservationId {
 
-  UUID value;
+  @JsonValue UUID value;
 
   ReservationId(UUID value) {
     this.value = value;
@@ -16,7 +17,7 @@ class ReservationId {
     return value.toString();
   }
 
-  static ReservationId create() {
+  public static ReservationId create() {
     return new ReservationId(UUID.randomUUID());
   }
 }

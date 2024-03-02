@@ -1,4 +1,4 @@
-package jp.kukv.reservations.domain.model.reservation.guide;
+package jp.kukv.reservations.domain.model.guide;
 
 import java.time.LocalDateTime;
 
