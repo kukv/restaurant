@@ -1,8 +1,8 @@
 drop table if exists reservations.restaurant_application_linkage;
 drop table if exists reservations.already_guided_reservation;
-drop table if exists reservations.course_cancel_fee_collected;
-drop table if exists reservations.course_cancel_fee;
-drop table if exists reservations.course_cancel_policy;
+drop table if exists reservations.cancel_fee_collected;
+drop table if exists reservations.cancel_fee;
+drop table if exists reservations.cancel_policy;
 drop table if exists reservations.cancel_reservation_reason;
 drop table if exists reservations.canceled_reservation;
 drop table if exists reservations.reservation_holder_contact;
@@ -89,7 +89,7 @@ create table reservations.canceled_reservation(
     constraint country_canceled_reservation_reservation_id_unique unique (reservation_id)
 );
 comment on table  reservations.canceled_reservation                  is 'キャンセル済みの予約';
-comment on column reservations.canceled_reservation.id               is 'キャンセル済みの予約ID';
+comment on column reservations.canceled_reservation.id               is 'キャンセルID';
 comment on column reservations.canceled_reservation.reservation_id   is '予約ID';
 comment on column reservations.canceled_reservation.canceled_at      is 'キャンセル日時';
 
@@ -103,44 +103,55 @@ comment on table  reservations.cancel_reservation_reason                        
 comment on column reservations.cancel_reservation_reason.canceled_reservation_id   is 'キャンセル済みの予約ID';
 comment on column reservations.cancel_reservation_reason.reason                    is '理由';
 
-create table reservations.course_cancel_policy(
-    interval_days varchar(10) not null primary key,
-    fee_rate      decimal(3, 2) not null
-);
-comment on table  reservations.course_cancel_policy                          is 'コースキャンセルポリシー';
-comment on column reservations.course_cancel_policy.interval_days            is '予約日からキャンセル日までの間隔';
-comment on column reservations.course_cancel_policy.fee_rate                 is 'キャンセル料(パーセンテージ)';
-insert into reservations.course_cancel_policy(interval_days, fee_rate)
-values ('当日', 1.0),
-       ('前日', 0.5),
-       ('2日前から', 0);
+create table reservations.cancel_policy(
+    id                  serial      not null primary key,
+    reservation_type    varchar(50) not null,
+    interval_days       varchar(12) not null,
+    fee_rate            decimal(3, 2) not null,
 
-create table reservations.course_cancel_fee(
+    foreign key (reservation_type) references reservations.reservation_type (type),
+
+    constraint country_cancel_policy_reservation_type_interval_days_unique unique (reservation_type, interval_days)
+);
+comment on table  reservations.cancel_policy                          is 'キャンセルポリシー';
+comment on column reservations.cancel_policy.id                       is 'キャンセルポリシーID';
+comment on column reservations.cancel_policy.reservation_type         is '予約種別';
+comment on column reservations.cancel_policy.interval_days            is '予約日からキャンセル日までの間隔';
+comment on column reservations.cancel_policy.fee_rate                 is 'キャンセル料(パーセンテージ)';
+insert into reservations.cancel_policy(reservation_type, interval_days, fee_rate)
+values  ('席のみ予約', '予約日当日', 0),
+        ('席のみ予約', '予約日前日', 0),
+        ('席のみ予約', '予約日前日の2日前以前', 0),
+        ('コース予約', '予約日当日', 1.0),
+        ('コース予約', '予約日前日', 0.5),
+        ('コース予約', '予約日前日の2日前以前', 0);
+
+create table reservations.cancel_fee(
     id                      serial      not null primary key,
     canceled_reservation_id integer     not null,
-    policy                  varchar(10) not null,
+    cancel_policy_id        integer     not null,
     fee                     integer     not null,
 
     foreign key (canceled_reservation_id) references reservations.canceled_reservation (id),
-    foreign key (policy)                  references reservations.course_cancel_policy (interval_days),
+    foreign key (cancel_policy_id)        references reservations.cancel_policy (id),
 
     constraint country_course_cancel_fee_canceled_reservation_id_unique unique (canceled_reservation_id)
 );
-comment on table  reservations.course_cancel_fee                            is 'コースキャンセル料';
-comment on column reservations.course_cancel_fee.id                         is 'コースキャンセル料ID';
-comment on column reservations.course_cancel_fee.canceled_reservation_id    is 'キャンセル済みの予約ID';
-comment on column reservations.course_cancel_fee.policy                     is 'コースキャンセルポリシー';
-comment on column reservations.course_cancel_fee.fee                        is 'キャンセル料(円)';
+comment on table  reservations.cancel_fee                            is 'キャンセル料';
+comment on column reservations.cancel_fee.id                         is 'キャンセル料ID';
+comment on column reservations.cancel_fee.canceled_reservation_id    is 'キャンセル済みの予約ID';
+comment on column reservations.cancel_fee.cancel_policy_id           is 'キャンセルポリシー';
+comment on column reservations.cancel_fee.fee                        is 'キャンセル料(円)';
 
-create table reservations.course_cancel_fee_collected(
-    course_cancel_fee_id    integer                     not null primary key,
-    collected_at            timestamp without time zone not null default current_timestamp,
+create table reservations.cancel_fee_collected(
+    cancel_fee_id    integer                     not null primary key,
+    collected_at     timestamp without time zone not null default current_timestamp,
 
-    foreign key (course_cancel_fee_id) references reservations.course_cancel_fee (id)
+    foreign key (cancel_fee_id) references reservations.cancel_fee (id)
 );
-comment on table  reservations.course_cancel_fee_collected                      is 'コースキャンセル料徴収済み';
-comment on column reservations.course_cancel_fee_collected.course_cancel_fee_id is 'コースキャンセル料ID';
-comment on column reservations.course_cancel_fee_collected.collected_at         is '徴収日時';
+comment on table  reservations.cancel_fee_collected                is 'キャンセル料徴収済み';
+comment on column reservations.cancel_fee_collected.cancel_fee_id  is 'キャンセル料ID';
+comment on column reservations.cancel_fee_collected.collected_at   is '徴収日時';
 
 create table reservations.already_guided_reservation(
     id              serial                      not null primary key,
