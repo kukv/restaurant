@@ -10,7 +10,7 @@
             created_at
         )
         values (
-           #{reservationId.type},
+           #{reservationId.value},
            #{reservation.type},
            #{reservation.date.value},
            #{reservation.time.value},
