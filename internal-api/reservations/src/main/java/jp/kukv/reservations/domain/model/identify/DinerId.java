@@ -1,8 +1,13 @@
 package jp.kukv.reservations.domain.model.identify;
 
-/** ディナー客ID */
-class DinerId {
+import com.fasterxml.jackson.annotation.JsonValue;
+import jakarta.validation.constraints.NotNull;
 
+/** ディナー客ID */
+public class DinerId {
+
+  @NotNull(message = "ディナー客IDは必須")
+  @JsonValue
   Integer value;
 
   DinerId(Integer value) {
@@ -14,7 +19,7 @@ class DinerId {
     return String.valueOf(value);
   }
 
-  private DinerId() {}
+  DinerId() {}
 
   public static DinerId empty() {
     return new DinerId();
