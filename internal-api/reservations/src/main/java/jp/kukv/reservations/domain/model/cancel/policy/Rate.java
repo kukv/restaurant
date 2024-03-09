@@ -2,7 +2,7 @@ package jp.kukv.reservations.domain.model.cancel.policy;
 
 import java.math.BigDecimal;
 
-/** キャンセル料(%) */
+/** キャンセル手数料率 */
 class Rate {
 
   BigDecimal value;
@@ -15,4 +15,6 @@ class Rate {
   public String toString() {
     return value.toPlainString();
   }
+
+  Rate() {}
 }
