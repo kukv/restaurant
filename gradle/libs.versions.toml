@@ -39,7 +39,7 @@ logback-access = { module = "ch.qos.logback:logback-access" }
 # unit test library
 #########################################
 karate-junit5 = { module = "com.intuit.karate:karate-junit5", version = { strictly = "1.4.1" } }
-cucumber-reporting = { module = "net.masterthought:cucumber-reporting", version = { strictly = "5.7.8" } }
+cucumber-reporting = { module = "net.masterthought:cucumber-reporting", version = { strictly = "5.8.0" } }
 
 [bundles]
 spring-boot-starter-api = [
