@@ -1,34 +1,31 @@
 package jp.kukv.reservations.domain.model.cancel;
 
-import jp.kukv.reservations.domain.model.cancel.collect.Collect;
-import jp.kukv.reservations.domain.model.cancel.policy.Policy;
+import jp.kukv.reservations.domain.model.cancel.commission.Commission;
 
 /** 予約キャンセル */
-public class Cancel {
-
-  CanceledTime canceledTime;
+class Cancel {
   Reason reason;
-  Policy policy;
-  Collect collect;
+  CanceledTime canceledTime;
 
-  Cancel(CanceledTime canceledTime, Reason reason, Policy policy, Collect collect) {
-    this.canceledTime = canceledTime;
+  Commission commission;
+
+  Cancel(Reason reason, CanceledTime canceledTime, Commission commission) {
     this.reason = reason;
-    this.policy = policy;
-    this.collect = collect;
+    this.canceledTime = canceledTime;
+    this.commission = commission;
   }
 
   @Override
   public String toString() {
     return "Cancel{"
-        + "canceledTime="
-        + canceledTime
-        + ", reason="
+        + "reason="
         + reason
-        + ", policy="
-        + policy
-        + ", collect="
-        + collect
+        + ", canceledTime="
+        + canceledTime
+        + ", commission="
+        + commission
         + '}';
   }
+
+  Cancel() {}
 }

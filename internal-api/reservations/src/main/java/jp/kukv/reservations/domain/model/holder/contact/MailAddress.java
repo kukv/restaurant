@@ -1,11 +1,11 @@
 package jp.kukv.reservations.domain.model.holder.contact;
 
-/** 電話番号 */
-class PhoneNumber {
+/** メールアドレス */
+class MailAddress {
 
   String value;
 
-  PhoneNumber(String value) {
+  MailAddress(String value) {
     this.value = value;
   }
 
@@ -14,5 +14,5 @@ class PhoneNumber {
     return value;
   }
 
-  PhoneNumber() {}
+  MailAddress() {}
 }

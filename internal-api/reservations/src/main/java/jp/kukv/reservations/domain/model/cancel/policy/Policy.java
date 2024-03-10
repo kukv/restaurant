@@ -1,18 +1,25 @@
 package jp.kukv.reservations.domain.model.cancel.policy;
 
-/** キャンセルポリシー */
-public class Policy {
+import java.math.BigDecimal;
+import jp.kukv.reservations.domain.model.cancel.commission.CancelAmount;
+import jp.kukv.reservations.domain.model.course.cuisine.CuisineAmount;
 
-  IntervalDays intervalDays;
+/** キャンセルポリシー */
+enum Policy {
+  当日(new Rate(BigDecimal.ONE)),
+  前日(new Rate(new BigDecimal("0.75"))),
+  前々日(new Rate(new BigDecimal("0.5"))),
+  前々日以前(new Rate(BigDecimal.ZERO));
+
   Rate rate;
 
-  Policy(IntervalDays intervalDays, Rate rate) {
-    this.intervalDays = intervalDays;
+  Policy(Rate rate) {
     this.rate = rate;
   }
 
-  @Override
-  public String toString() {
-    return "Policy{" + "intervalDays=" + intervalDays + ", rate=" + rate + '}';
+  CancelAmount toCancelAmount(CuisineAmount cuisineAmount) {
+    BigDecimal amount = BigDecimal.valueOf(cuisineAmount.toInteger(), 0);
+    BigDecimal fee = amount.multiply(rate.value);
+    return new CancelAmount(fee.intValue());
   }
 }
