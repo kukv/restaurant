@@ -1,7 +1,7 @@
 package jp.kukv.reservations.domain.model.diners;
 
 /** 食事人ID */
-class DinersId {
+public class DinersId {
 
   Integer value;
 

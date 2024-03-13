@@ -1,11 +1,13 @@
 package jp.kukv.reservations.domain.model.receipt;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /** 予約受付番号 */
-class ReceiptNumber {
+public class ReceiptNumber {
 
-  String value;
+  @JsonValue String value;
 
-  ReceiptNumber(String value) {
+  public ReceiptNumber(String value) {
     this.value = value;
   }
 

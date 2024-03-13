@@ -1,7 +1,11 @@
 package jp.kukv.reservations.domain.model.course;
 
 /** 予約コース種別 */
-enum CourseType {
+public enum CourseType {
   席のみ予約,
-  コース料理予約
+  コース料理予約;
+
+  boolean is席のみ予約() {
+    return this == 席のみ予約;
+  }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.kukv.reservations.infrastructure.datasource.receipt.ReceiptRecordMapper">
+    <select id="create" resultType="jp.kukv.reservations.infrastructure.datasource.receipt.ReceiptSerialNumber">
+        select nextval('reservations.receipt_serial_number') as value
+    </select>
+
+    <insert id="record">
+        insert into reservations.receipt(receipt_number, created_at)
+        values (#{receiptNumber.value}, #{createdTime.value})
+    </insert>
+</mapper>

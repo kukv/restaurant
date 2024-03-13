@@ -1,10 +1,16 @@
 package jp.kukv.reservations.domain.model.visit;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /** 来店予定日 */
 public class VisitDate {
 
+  @NotNull(message = "来店予定日は必須")
+  @FutureOrPresent(message = "来店予定日は当日以降")
+  @JsonValue
   LocalDate value;
 
   VisitDate(LocalDate value) {

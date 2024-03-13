@@ -13,4 +13,7 @@ plugins {
 
 dependencies {
     implementation(libs.bundles.spring.boot.starter.mybatis)
+    runtimeOnly(libs.postgresql.jdbc)
+
+    implementation(libs.commons.validator)
 }

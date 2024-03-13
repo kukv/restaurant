@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.kukv.reservations.infrastructure.datasource.reservation.ReservationMapper">
+
+    <resultMap id="reservation" type="jp.kukv.reservations.domain.model.reservation.Reservation">
+        <id column="receipt_number" property="receipt.receiptNumber.value" />
+        <result column="visit_date" property="receipt.visit.visitDate.value" />
+        <result column="visit_time" property="receipt.visit.visitTime.value" />
+        <result column="number_of_visitors" property="receipt.visit.numberOfVisitors.value" />
+        <result column="phone_number" property="receipt.holder.contact.phoneNumber.value" />
+        <result column="mail_address" property="receipt.holder.contact.mailAddress.value" />
+        <result column="name" property="receipt.holder.profile.name.value" />
+        <result column="birthdate" property="receipt.holder.profile.birthDate.value" />
+        <result column="course_type" property="course.courseType" />
+        <result column="cuisine_number" property="course.cuisine.cuisineNumber.value" />
+        <result column="amount" property="course.cuisine.cuisineAmount.value" />
+        <result column="linkage" property="dinersLinkage.linkage" />
+        <result column="diners_id" property="dinersLinkage.dinersId.value" />
+    </resultMap>
+
+    <sql id="baseSql">
+        select
+            receipt.receipt_number,
+            visit.visit_date,
+            visit.visit_time,
+            visit.number_of_visitors,
+            contact.phone_number,
+            contact.mail_address,
+            profile.name,
+            profile.birthdate,
+            course.course_type,
+            cuisine.cuisine_number,
+            cuisine.amount,
+            case restaurant_application_linkage.receipt_number
+                when restaurant_application_linkage.receipt_number is null then '未連携'
+                else '連携済'
+            end as linkage,
+            restaurant_application_linkage.diners_id
+        from reservations.receipt
+        inner join reservations.visit
+                on receipt.receipt_number = visit.receipt_number
+        inner join reservations.contact
+                on receipt.receipt_number = contact.receipt_number
+        inner join reservations.profile
+                on receipt.receipt_number = profile.receipt_number
+        inner join reservations.course
+                on receipt.receipt_number = course.receipt_number
+        inner join reservations.cuisine
+                on course.id = cuisine.course_id
+        left outer join reservations.reservation_cancel
+                on receipt.receipt_number = reservation_cancel.receipt_number
+        left outer join reservations.already_guided_reservation
+                on receipt.receipt_number = already_guided_reservation.receipt_number
+        left outer join reservations.restaurant_application_linkage
+                on receipt.receipt_number = restaurant_application_linkage.receipt_number
+        where reservation_cancel.receipt_number is null
+        and already_guided_reservation.receipt_number is null
+    </sql>
+
+    <select id="findBy" resultMap="reservation">
+        <include refid="baseSql" />
+        and reservation.receipt_number = #{receiptNumber.value}
+    </select>
+
+    <select id="listAll" resultMap="reservation">
+        <include refid="baseSql" />
+    </select>
+
+</mapper>

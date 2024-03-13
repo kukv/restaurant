@@ -1,7 +1,7 @@
 package jp.kukv.reservations.domain.model.cancel;
 
 /** 予約キャンセル理由 */
-class Reason {
+public class Reason {
 
   String value;
 

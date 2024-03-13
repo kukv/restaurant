@@ -1,11 +1,15 @@
 package jp.kukv.reservations.domain.model.visit;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import jakarta.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalTime;
 
 /** 来店予定時刻 */
 public class VisitTime {
 
+  @NotNull(message = "来店予定時刻は必須")
+  @JsonValue
   LocalTime value;
 
   VisitTime(LocalTime value) {

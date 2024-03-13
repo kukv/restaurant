@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.kukv.reservations.infrastructure.datasource.course.CourseRecordMapper">
+    <insert id="recordCurse" useGeneratedKeys="true" keyProperty="courseIdentifier.value">
+        insert into reservations.course(receipt_number, course_type, created_at)
+        values (#{receiptNumber.value}, #{courseType}, #{createdTime.value})
+    </insert>
+
+    <insert id="recordCuisine">
+        insert into reservations.cuisine(course_id, cuisine_number, amount, created_at)
+        values (#{courseIdentifier.value}, #{cuisine.cuisineNumber.value}, #{cuisine.cuisineAmount.value}, #{createdTime.value})
+    </insert>
+</mapper>

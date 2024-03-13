@@ -1,177 +1,178 @@
-drop table if exists reservations.restaurant_application_linkage;
+drop table if exists reservations.cancel_commission_collect;
+drop table if exists reservations.cancel_commission;
+drop table if exists reservations.reservation_cancel;
 drop table if exists reservations.already_guided_reservation;
-drop table if exists reservations.cancel_fee_collected;
-drop table if exists reservations.cancel_fee;
-drop table if exists reservations.cancel_policy;
-drop table if exists reservations.cancel_reservation_reason;
-drop table if exists reservations.canceled_reservation;
-drop table if exists reservations.reservation_holder_contact;
-drop table if exists reservations.reservation_holder_profile;
-drop table if exists reservations.reservation_course;
-drop table if exists reservations.reservation;
-drop table if exists reservations.reservation_type;
+drop table if exists reservations.restaurant_application_linkage;
+drop table if exists reservations.cuisine;
+drop table if exists reservations.course;
+drop table if exists reservations.course_type;
+drop table if exists reservations.contact;
+drop table if exists reservations.profile;
+drop table if exists reservations.visit;
+drop table if exists reservations.receipt;
+drop sequence reservations.receipt_serial_number;
 
-create table reservations.reservation_type(
-    type varchar(50) not null primary key
+create sequence reservations.receipt_serial_number cycle;
+
+create table reservations.receipt(
+    receipt_number varchar(50)                  not null primary key,
+    created_at     timestamp without time zone  not null default current_timestamp
 );
-comment on table  reservations.reservation_type      is '予約種別';
-comment on column reservations.reservation_type.type is '種別';
-insert into reservations.reservation_type(type)
-values ('席のみ予約'),
-       ('コース予約');
+comment on table  reservations.receipt                is '予約受付';
+comment on column reservations.receipt.receipt_number is '予約受付番号';
+comment on column reservations.receipt.created_at     is '作成日時';
 
-create table reservations.reservation(
-    id                  uuid                        not null primary key,
-    reservation_type    varchar(50)                 not null,
-    reservation_date    date                        not null,
-    reservation_time    time(4)                     not null,
+create table reservations.visit(
+    id                  serial                      not null primary key,
+    receipt_number      varchar(50)                 not null,
+    visit_date          date                        not null,
+    visit_time          time                        not null,
+    number_of_visitors  integer                     not null,
     created_at          timestamp without time zone not null default current_timestamp,
 
-    foreign key (reservation_type) references reservations.reservation_type (type)
+    foreign key (receipt_number) references reservations.receipt (receipt_number)
 );
-comment on table  reservations.reservation                  is '予約';
-comment on column reservations.reservation.id               is '予約ID';
-comment on column reservations.reservation.reservation_type is '予約種別';
-comment on column reservations.reservation.reservation_date is '予約日';
-comment on column reservations.reservation.reservation_time is '予約時間';
-comment on column reservations.reservation.created_at       is '作成日時';
+comment on table  reservations.visit                    is '来店予定';
+comment on column reservations.visit.id                 is '来店予定ID';
+comment on column reservations.visit.receipt_number     is '予約受付番号';
+comment on column reservations.visit.visit_date         is '来店予定日';
+comment on column reservations.visit.visit_time         is '来店予定時刻';
+comment on column reservations.visit.number_of_visitors is '来店人数';
+comment on column reservations.visit.created_at         is '作成日時';
 
-create table reservations.reservation_course(
-    id              serial                      not null primary key,
-    reservation_id  uuid                        not null,
-    course_name     varchar(100)                not null,
-    created_at      timestamp without time zone not null default current_timestamp,
+create table reservations.profile(
+    id                  serial                      not null primary key,
+    receipt_number      varchar(50)                 not null,
+    name                varchar(30)                 not null,
+    birthdate           date                        not null,
+    created_at          timestamp without time zone not null default current_timestamp,
 
-    foreign key (reservation_id) references reservations.reservation (id)
+    foreign key (receipt_number) references reservations.receipt (receipt_number)
 );
-comment on table  reservations.reservation_course                  is '予約コース';
-comment on column reservations.reservation_course.id               is '予約コースID';
-comment on column reservations.reservation_course.reservation_id   is '予約ID';
-comment on column reservations.reservation_course.course_name      is '予約コース名';
-comment on column reservations.reservation_course.created_at       is '作成日時';
+comment on table  reservations.profile                    is '予約者プロフィール';
+comment on column reservations.profile.id                 is '予約者プロフィールID';
+comment on column reservations.profile.receipt_number     is '予約受付番号';
+comment on column reservations.profile.name               is '予約者氏名';
+comment on column reservations.profile.birthdate          is '生年月日';
+comment on column reservations.profile.created_at         is '作成日時';
 
-create table reservations.reservation_holder_profile(
-    id              serial                      not null primary key,
-    reservation_id  uuid                        not null,
-    name            varchar(50)                 not null,
-    birth_date      date                        not null,
-    created_at      timestamp without time zone not null default current_timestamp,
+create table reservations.contact(
+    id                  serial                      not null primary key,
+    receipt_number      varchar(50)                 not null,
+    phone_number        varchar(11)                 not null,
+    mail_address        varchar(128)                not null,
+    created_at          timestamp without time zone not null default current_timestamp,
 
-    foreign key (reservation_id) references reservations.reservation (id)
+    foreign key (receipt_number) references reservations.receipt (receipt_number)
 );
-comment on table  reservations.reservation_holder_profile                  is '予約者プロフィール';
-comment on column reservations.reservation_holder_profile.id               is '予約者プロフィールID';
-comment on column reservations.reservation_holder_profile.reservation_id   is '予約ID';
-comment on column reservations.reservation_holder_profile.name             is '予約者氏名';
-comment on column reservations.reservation_holder_profile.birth_date       is '予約者生年月日';
-comment on column reservations.reservation_holder_profile.created_at       is '作成日時';
+comment on table  reservations.contact                    is '予約者連絡先';
+comment on column reservations.contact.id                 is '予約者連絡先ID';
+comment on column reservations.contact.receipt_number     is '予約受付番号';
+comment on column reservations.contact.phone_number       is '電話番号';
+comment on column reservations.contact.mail_address       is 'メールアドレス';
+comment on column reservations.contact.created_at         is '作成日時';
 
-create table reservations.reservation_holder_contact(
-    id              serial                      not null primary key,
-    reservation_id  uuid                        not null,
-    phone_number    varchar(13)                 not null,
-    created_at      timestamp without time zone not null default current_timestamp,
-
-    foreign key (reservation_id) references reservations.reservation (id)
+create table reservations.course_type(
+    type varchar(5) not null primary key
 );
-comment on table  reservations.reservation_holder_contact                  is '予約者連絡先';
-comment on column reservations.reservation_holder_contact.id               is '予約者連絡先ID';
-comment on column reservations.reservation_holder_contact.reservation_id   is '予約ID';
-comment on column reservations.reservation_holder_contact.phone_number     is '予約者電話番号';
-comment on column reservations.reservation_holder_contact.created_at       is '作成日時';
+comment on table  reservations.course_type      is '予約コース種別';
+comment on column reservations.course_type.type is '種別';
 
-create table reservations.canceled_reservation(
-    id              serial                      not null primary key,
-    reservation_id  uuid                        not null,
-    canceled_at     timestamp without time zone not null default current_timestamp,
+create table reservations.course(
+    id                  serial                      not null primary key,
+    receipt_number      varchar(50)                 not null,
+    course_type         varchar(5)                  not null,
+    created_at          timestamp without time zone not null default current_timestamp,
 
-    foreign key (reservation_id) references reservations.reservation (id),
-    constraint country_canceled_reservation_reservation_id_unique unique (reservation_id)
+    foreign key (receipt_number) references reservations.receipt (receipt_number),
+    foreign key (course_type) references reservations.course_type (type)
 );
-comment on table  reservations.canceled_reservation                  is 'キャンセル済みの予約';
-comment on column reservations.canceled_reservation.id               is 'キャンセルID';
-comment on column reservations.canceled_reservation.reservation_id   is '予約ID';
-comment on column reservations.canceled_reservation.canceled_at      is 'キャンセル日時';
+comment on table  reservations.course                   is '予約コース';
+comment on column reservations.course.id                is '予約コースID';
+comment on column reservations.course.receipt_number    is '予約受付番号';
+comment on column reservations.course.course_type       is '予約コース種別';
+comment on column reservations.course.created_at        is '作成日時';
 
-create table reservations.cancel_reservation_reason(
-    canceled_reservation_id integer                     not null primary key,
-    reason                  text                        not null,
+create table reservations.cuisine(
+    course_id       integer                     not null primary key,
+    cuisine_number  integer                     not null,
+    amount          integer                     not null,
 
-    foreign key (canceled_reservation_id) references reservations.canceled_reservation (id)
+    foreign key (course_id) references reservations.course (id)
 );
-comment on table  reservations.cancel_reservation_reason                           is '予約キャンセル理由';
-comment on column reservations.cancel_reservation_reason.canceled_reservation_id   is 'キャンセル済みの予約ID';
-comment on column reservations.cancel_reservation_reason.reason                    is '理由';
-
-create table reservations.cancel_policy(
-    id                  serial      not null primary key,
-    reservation_type    varchar(50) not null,
-    interval_days       varchar(12) not null,
-    fee_rate            decimal(3, 2) not null,
-
-    foreign key (reservation_type) references reservations.reservation_type (type),
-
-    constraint country_cancel_policy_reservation_type_interval_days_unique unique (reservation_type, interval_days)
-);
-comment on table  reservations.cancel_policy                          is 'キャンセルポリシー';
-comment on column reservations.cancel_policy.id                       is 'キャンセルポリシーID';
-comment on column reservations.cancel_policy.reservation_type         is '予約種別';
-comment on column reservations.cancel_policy.interval_days            is '予約日からキャンセル日までの間隔';
-comment on column reservations.cancel_policy.fee_rate                 is 'キャンセル料(パーセンテージ)';
-insert into reservations.cancel_policy(reservation_type, interval_days, fee_rate)
-values  ('席のみ予約', '予約日当日', 0),
-        ('席のみ予約', '予約日前日', 0),
-        ('席のみ予約', '予約日前日の2日前以前', 0),
-        ('コース予約', '予約日当日', 1.0),
-        ('コース予約', '予約日前日', 0.5),
-        ('コース予約', '予約日前日の2日前以前', 0);
-
-create table reservations.cancel_fee(
-    id                      serial      not null primary key,
-    canceled_reservation_id integer     not null,
-    cancel_policy_id        integer     not null,
-    fee                     integer     not null,
-
-    foreign key (canceled_reservation_id) references reservations.canceled_reservation (id),
-    foreign key (cancel_policy_id)        references reservations.cancel_policy (id),
-
-    constraint country_course_cancel_fee_canceled_reservation_id_unique unique (canceled_reservation_id)
-);
-comment on table  reservations.cancel_fee                            is 'キャンセル料';
-comment on column reservations.cancel_fee.id                         is 'キャンセル料ID';
-comment on column reservations.cancel_fee.canceled_reservation_id    is 'キャンセル済みの予約ID';
-comment on column reservations.cancel_fee.cancel_policy_id           is 'キャンセルポリシー';
-comment on column reservations.cancel_fee.fee                        is 'キャンセル料(円)';
-
-create table reservations.cancel_fee_collected(
-    cancel_fee_id    integer                     not null primary key,
-    collected_at     timestamp without time zone not null default current_timestamp,
-
-    foreign key (cancel_fee_id) references reservations.cancel_fee (id)
-);
-comment on table  reservations.cancel_fee_collected                is 'キャンセル料徴収済み';
-comment on column reservations.cancel_fee_collected.cancel_fee_id  is 'キャンセル料ID';
-comment on column reservations.cancel_fee_collected.collected_at   is '徴収日時';
-
-create table reservations.already_guided_reservation(
-    id              serial                      not null primary key,
-    reservation_id  uuid                        not null,
-    guided_at       timestamp without time zone not null default current_timestamp,
-
-    foreign key (reservation_id) references reservations.reservation (id),
-    constraint country_already_guided_reservation_reservation_id_unique unique (reservation_id)
-);
-comment on table  reservations.already_guided_reservation                  is '案内済みの予約';
-comment on column reservations.already_guided_reservation.id               is '案内済みの予約ID';
-comment on column reservations.already_guided_reservation.reservation_id   is '予約ID';
-comment on column reservations.already_guided_reservation.guided_at        is '案内日時';
+comment on table  reservations.cuisine                   is '予約コース料理';
+comment on column reservations.cuisine.course_id         is '予約コースID';
+comment on column reservations.cuisine.cuisine_number    is '予約コース料理番号';
+comment on column reservations.cuisine.amount            is '予約コース料理金額';
 
 create table reservations.restaurant_application_linkage(
-    reservation_id  uuid    not null primary key,
-    diner_id        integer not null,
+    receipt_number  varchar(50)                 not null primary key,
+    diners_id       integer                     not null,
+    created_at      timestamp without time zone not null default current_timestamp,
 
-    foreign key (reservation_id) references reservations.reservation (id)
+    foreign key (receipt_number) references reservations.receipt (receipt_number)
 );
-comment on table  reservations.restaurant_application_linkage                 is 'レストランアプリとの連携';
-comment on column reservations.restaurant_application_linkage.reservation_id  is '予約ID';
-comment on column reservations.restaurant_application_linkage.diner_id        is 'ディナー客ID';
+comment on table  reservations.restaurant_application_linkage                   is 'レストランアプリとの予約連携';
+comment on column reservations.restaurant_application_linkage.receipt_number    is '予約受付番号';
+comment on column reservations.restaurant_application_linkage.diners_id         is '食事人ID';
+comment on column reservations.restaurant_application_linkage.created_at        is '作成日時';
+
+create table reservations.already_guided_reservation(
+    id                  serial                      not null primary key,
+    receipt_number      varchar(50)                 not null,
+    guided_at           timestamp without time zone not null,
+    created_at          timestamp without time zone not null default current_timestamp,
+
+    foreign key (receipt_number) references reservations.receipt (receipt_number),
+    constraint country_already_guided_receipt_number_unique unique (receipt_number)
+);
+comment on table  reservations.already_guided_reservation                   is '案内済みの予約';
+comment on column reservations.already_guided_reservation.id                is '案内済みの予約ID';
+comment on column reservations.already_guided_reservation.receipt_number    is '予約受付番号';
+comment on column reservations.already_guided_reservation.guided_at         is '案内日時';
+comment on column reservations.already_guided_reservation.created_at        is '作成日時';
+
+create table reservations.reservation_cancel(
+    id                  serial                      not null primary key,
+    receipt_number      varchar(50)                 not null,
+    reason              varchar(100)                not null,
+    canceled_at         timestamp without time zone not null,
+    created_at          timestamp without time zone not null default current_timestamp,
+
+    foreign key (receipt_number) references reservations.receipt (receipt_number),
+    constraint country_reservation_cancel_receipt_number_unique unique (receipt_number)
+);
+comment on table  reservations.reservation_cancel                   is '予約キャンセル';
+comment on column reservations.reservation_cancel.id                is '予約キャンセルID';
+comment on column reservations.reservation_cancel.receipt_number    is '予約受付番号';
+comment on column reservations.reservation_cancel.reason            is '理由';
+comment on column reservations.reservation_cancel.canceled_at       is '予約キャンセル日時';
+comment on column reservations.reservation_cancel.created_at        is '作成日時';
+
+create table reservations.cancel_commission(
+    id                      serial                      not null primary key,
+    reservation_cancel_id   integer                     not null,
+    amount                  integer                     not null,
+    charge_at               timestamp without time zone not null,
+    created_at              timestamp without time zone not null default current_timestamp,
+
+    foreign key (reservation_cancel_id) references reservations.reservation_cancel (id)
+);
+comment on table  reservations.cancel_commission                        is '予約キャンセル手数料';
+comment on column reservations.cancel_commission.id                     is '予約キャンセル手数料ID';
+comment on column reservations.cancel_commission.reservation_cancel_id  is '予約受付番号';
+comment on column reservations.cancel_commission.amount                 is 'キャンセル手数料';
+comment on column reservations.cancel_commission.charge_at              is '予約キャンセル手数料請求日時';
+comment on column reservations.cancel_commission.created_at             is '作成日時';
+
+create table reservations.cancel_commission_collect(
+    cancel_commission_id    integer                     not null primary key,
+    collected_at            timestamp without time zone not null,
+    created_at              timestamp without time zone not null default current_timestamp,
+
+    foreign key (cancel_commission_id) references reservations.cancel_commission (id)
+);
+comment on table  reservations.cancel_commission_collect                        is '予約キャンセル手数料徴収';
+comment on column reservations.cancel_commission_collect.cancel_commission_id   is '予約キャンセル手数料ID';
+comment on column reservations.cancel_commission_collect.collected_at           is '予約キャンセル手数料徴収日時';
+comment on column reservations.cancel_commission_collect.created_at             is '作成日時';
