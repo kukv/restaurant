@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import jp.kukv.reservations.domain.model.cancel.commission.CancelAmount;
 import jp.kukv.reservations.domain.model.course.cuisine.CourseAmountDummyFactory;
-import jp.kukv.reservations.domain.model.course.cuisine.CuisineAmount;
+import jp.kukv.reservations.domain.model.receipt.course.cuisine.CuisineAmount;
 import org.junit.jupiter.api.Test;
 
 public class キャンセルポリシーテスト {

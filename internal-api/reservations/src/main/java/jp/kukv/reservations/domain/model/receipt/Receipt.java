@@ -1,8 +1,8 @@
 package jp.kukv.reservations.domain.model.receipt;
 
-import jp.kukv.reservations.domain.model.course.Course;
-import jp.kukv.reservations.domain.model.holder.Holder;
-import jp.kukv.reservations.domain.model.visit.Visit;
+import jp.kukv.reservations.domain.model.receipt.course.Course;
+import jp.kukv.reservations.domain.model.receipt.holder.Holder;
+import jp.kukv.reservations.domain.model.receipt.visit.Visit;
 
 /** 予約受付 */
 public class Receipt {

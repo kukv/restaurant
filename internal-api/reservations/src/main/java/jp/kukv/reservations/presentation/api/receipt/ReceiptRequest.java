@@ -3,9 +3,9 @@ package jp.kukv.reservations.presentation.api.receipt;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import jp.kukv.reservations.domain.model.course.Course;
-import jp.kukv.reservations.domain.model.holder.Holder;
-import jp.kukv.reservations.domain.model.visit.Visit;
+import jp.kukv.reservations.domain.model.receipt.course.Course;
+import jp.kukv.reservations.domain.model.receipt.holder.Holder;
+import jp.kukv.reservations.domain.model.receipt.visit.Visit;
 
 class ReceiptRequest {
 

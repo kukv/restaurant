@@ -1,8 +1,8 @@
 package jp.kukv.reservations.domain.model.receipt;
 
-import jp.kukv.reservations.domain.model.visit.Visit;
-import jp.kukv.reservations.domain.model.visit.VisitDate;
-import jp.kukv.reservations.domain.model.visit.VisitTime;
+import jp.kukv.reservations.domain.model.receipt.visit.Visit;
+import jp.kukv.reservations.domain.model.receipt.visit.VisitDate;
+import jp.kukv.reservations.domain.model.receipt.visit.VisitTime;
 
 /** 予約受付ルール */
 class ReceiptRule {

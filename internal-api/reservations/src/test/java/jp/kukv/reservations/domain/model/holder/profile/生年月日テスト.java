@@ -7,6 +7,7 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import java.time.LocalDate;
 import java.util.Set;
+import jp.kukv.reservations.domain.model.receipt.holder.profile.BirthDate;
 import org.junit.jupiter.api.Test;
 
 class 生年月日テスト {

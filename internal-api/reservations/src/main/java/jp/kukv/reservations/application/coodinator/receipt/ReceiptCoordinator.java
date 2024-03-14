@@ -1,14 +1,14 @@
 package jp.kukv.reservations.application.coodinator.receipt;
 
-import jp.kukv.reservations.application.service.course.CourseRecordService;
-import jp.kukv.reservations.application.service.holder.contact.ContactRecordService;
-import jp.kukv.reservations.application.service.holder.profile.ProfileRecordService;
 import jp.kukv.reservations.application.service.receipt.ReceiptRecordService;
-import jp.kukv.reservations.application.service.visit.VisitRecordService;
-import jp.kukv.reservations.domain.model.course.Course;
-import jp.kukv.reservations.domain.model.holder.Holder;
+import jp.kukv.reservations.application.service.receipt.course.CourseRecordService;
+import jp.kukv.reservations.application.service.receipt.holder.contact.ContactRecordService;
+import jp.kukv.reservations.application.service.receipt.holder.profile.ProfileRecordService;
+import jp.kukv.reservations.application.service.receipt.visit.VisitRecordService;
 import jp.kukv.reservations.domain.model.receipt.ReceiptNumber;
-import jp.kukv.reservations.domain.model.visit.Visit;
+import jp.kukv.reservations.domain.model.receipt.course.Course;
+import jp.kukv.reservations.domain.model.receipt.holder.Holder;
+import jp.kukv.reservations.domain.model.receipt.visit.Visit;
 import org.springframework.stereotype.Service;
 
 /** 予約受付コーディネーター */

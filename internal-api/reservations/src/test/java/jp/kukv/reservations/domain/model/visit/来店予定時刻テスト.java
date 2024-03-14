@@ -6,6 +6,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import java.util.Set;
+import jp.kukv.reservations.domain.model.receipt.visit.VisitTime;
 import org.junit.jupiter.api.Test;
 
 class 来店予定時刻テスト {

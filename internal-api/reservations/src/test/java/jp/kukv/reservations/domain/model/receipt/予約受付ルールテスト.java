@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import jp.kukv.reservations.domain.model.visit.Visit;
+import jp.kukv.reservations.domain.model.receipt.visit.Visit;
 import jp.kukv.reservations.domain.model.visit.VisitDummyFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

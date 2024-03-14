@@ -2,7 +2,7 @@ package jp.kukv.reservations.domain.model.cancel.policy;
 
 import java.math.BigDecimal;
 import jp.kukv.reservations.domain.model.cancel.commission.CancelAmount;
-import jp.kukv.reservations.domain.model.course.cuisine.CuisineAmount;
+import jp.kukv.reservations.domain.model.receipt.course.cuisine.CuisineAmount;
 
 /** キャンセルポリシー */
 enum Policy {

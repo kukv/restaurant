@@ -2,7 +2,6 @@ drop table if exists reservations.cancel_commission_collect;
 drop table if exists reservations.cancel_commission;
 drop table if exists reservations.reservation_cancel;
 drop table if exists reservations.already_guided_reservation;
-drop table if exists reservations.restaurant_application_linkage;
 drop table if exists reservations.cuisine;
 drop table if exists reservations.course;
 drop table if exists reservations.course_type;
@@ -104,18 +103,6 @@ comment on table  reservations.cuisine                   is '予約コース料�
 comment on column reservations.cuisine.course_id         is '予約コースID';
 comment on column reservations.cuisine.cuisine_number    is '予約コース料理番号';
 comment on column reservations.cuisine.amount            is '予約コース料理金額';
-
-create table reservations.restaurant_application_linkage(
-    receipt_number  varchar(50)                 not null primary key,
-    diners_id       integer                     not null,
-    created_at      timestamp without time zone not null default current_timestamp,
-
-    foreign key (receipt_number) references reservations.receipt (receipt_number)
-);
-comment on table  reservations.restaurant_application_linkage                   is 'レストランアプリとの予約連携';
-comment on column reservations.restaurant_application_linkage.receipt_number    is '予約受付番号';
-comment on column reservations.restaurant_application_linkage.diners_id         is '食事人ID';
-comment on column reservations.restaurant_application_linkage.created_at        is '作成日時';
 
 create table reservations.already_guided_reservation(
     id                  serial                      not null primary key,
