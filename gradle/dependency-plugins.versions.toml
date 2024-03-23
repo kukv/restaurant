@@ -1,5 +1,5 @@
 [libraries]
-spring-boot = { module = "org.springframework.boot:spring-boot-gradle-plugin", version = { strictly = "3.2.3" } }
+spring-boot = { module = "org.springframework.boot:spring-boot-gradle-plugin", version = { strictly = "3.2.4" } }
 spring-dependency-management = { module = "io.spring.gradle:dependency-management-plugin", version = { strictly = "1.1.4" } }
 springdoc-openapi = { module = "org.springdoc:springdoc-openapi-gradle-plugin", version = { strictly = "1.8.0" } }
 jig = { module = "org.dddjava.jig:jig-gradle-plugin", version = { strictly = "2024.2.1" } }
